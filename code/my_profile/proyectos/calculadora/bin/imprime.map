@@ -1,0 +1,40 @@
+RAM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+AA                                                                0x0300       4
+BB                                                                0x0304       4
+CC                                                                0x0308       4
+cx                                                                0x030C       4
+frac                                                              0x0310       4
+contb                                                             0x0314       2
+v1                                                                0x0316       2
+v2                                                                0x0318       2
+vo                                                                0x031A       2
+maxp                                                              0x031C       2
+numA                                                              0x031E      12
+numB                                                              0x032A      12
+numF                                                              0x0336      19
+lugar                                                             0x0349       1
+varA                                                              0x034A      50
+varC                                                              0x037C      50
+binario                                                           0x03AE       1
+operacion                                                         0x03AF       1
+_seed                                                             0x03B0       4
+_base_y                                                           0x03B4       4
+_lcd_x                                                            0x03B8       1
+_lcd_y                                                            0x03B9       1
+_lcd_maxx                                                         0x03BA       1
+
+EEPROM Allocation
+Variable                                                          Address   Size
+--------------------------------------------------------------------------------
+
+Register Allocation
+Variable                                                          Register  Size
+--------------------------------------------------------------------------------
+xpuntoa                                                           R3,R4        2
+xpuntob                                                           R5,R6        2
+centero                                                           R7,R8        2
+cpunto                                                            R9,R10       2
+CH                                                                R11,R12      2
+conta                                                             R13,R14      2
