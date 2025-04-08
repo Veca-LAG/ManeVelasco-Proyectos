@@ -1,4 +1,4 @@
-package chunkKnuh.utilerias;
+package chunkknuh.utilerias;
 
 import java.awt.Component;
 

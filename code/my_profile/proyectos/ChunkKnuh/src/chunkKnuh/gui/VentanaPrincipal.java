@@ -1,4 +1,4 @@
-package chunkKnuh.gui;
+package chunkknuh.gui;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,19 +10,19 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
-//paradigmas de programación I
-//Reto 3- Catálogo de lego
+import chunkknuh.excepciones.BaseDatosErrorException;
+import chunkknuh.utilerias.GenerarReporteLego;
+
+//paradigmas de programación II
 //Alumno=Mane Isabela Velasco Naranjo
-//grupo 412
-//20/06/2024
+//Reto 1
 
 public class VentanaPrincipal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	// Menú Archivo
 	private JMenu archivo;
-	private JMenuItem abrir;
-	private JMenuItem guardar;
+	private JMenuItem generarReporte;
 	private JMenuItem salir;
 	// Menú Operaciones
 	private JMenu operaciones;
@@ -37,60 +37,52 @@ public class VentanaPrincipal extends JFrame {
 	public VentanaPrincipal() {
 		// Configuración de pantalla
 		super("ChunkKnuh");
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/ChunkKnuh/imagenes/logo.png")));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/chunkknuh/imagenes/logo.png")));
 
 		EventosDeLego eventosDeLego = new EventosDeLego();
 		// Menú Archivo
 		archivo = new JMenu("Archivo");
-		archivo.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/archivo.png")));
+		archivo.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/archivo.png")));
 		archivo.setMnemonic(KeyEvent.VK_A);
-		archivo.setToolTipText("Menú de archivo de ChunkKnuh.");
+		archivo.setToolTipText("Menú de legos de ChunkKnuh.");
 
-		abrir = new JMenuItem("Abrir");
-		abrir.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/abrir.png")));
-		abrir.setMnemonic(KeyEvent.VK_R);
-		// Acelerador
-		abrir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_DOWN_MASK));
-		abrir.setToolTipText("Abrir archivos de ChunkKnuh.");
-		abrir.addActionListener(eventosDeLego);
-
-		guardar = new JMenuItem("Guardar");
-		guardar.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/guardar.png")));
-		guardar.setMnemonic(KeyEvent.VK_G);
-		guardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.ALT_DOWN_MASK));
-		guardar.setToolTipText("Guardar archivos de ChunkKnuh.");
-		guardar.addActionListener(eventosDeLego);
+		// Generar reporte
+		generarReporte = new JMenuItem("Generar reporte");
+		generarReporte.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/generarReporte.png")));
+		generarReporte.setMnemonic(KeyEvent.VK_G);
+		generarReporte.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_G, InputEvent.ALT_DOWN_MASK));
+		generarReporte.setToolTipText("Generar reporte de legos de ChunkKnuh.");
+		generarReporte.addActionListener(eventosDeLego);
 
 		salir = new JMenuItem("Salir");
-		salir.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/salir.png")));
+		salir.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/salir.png")));
 		salir.setMnemonic(KeyEvent.VK_S);
 		salir.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_DOWN_MASK));
 		salir.setToolTipText("Cerrar ChunkKnuh.");
 		salir.addActionListener(eventosDeLego);
 
 		// Menú de archivo
-		archivo.add(abrir);
-		archivo.add(guardar);
+		archivo.add(generarReporte);
 		archivo.addSeparator();
 		archivo.add(salir);
 
 		// Operaciones
 		operaciones = new JMenu("Operaciones");
-		operaciones.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/operaciones.png")));
+		operaciones.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/operaciones.png")));
 		operaciones.setMnemonic(KeyEvent.VK_O);
 		operaciones.setToolTipText("Menú de operaciones de ChunkKnuh.");
 
 		// Consultar
 		consultar = new JMenuItem("Consultar");
-		consultar.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/consultar.png")));
+		consultar.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/consultar.png")));
 		consultar.setMnemonic(KeyEvent.VK_U);
 		consultar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, InputEvent.ALT_DOWN_MASK));
-		consultar.setToolTipText("Consultar los archivo de ChunkKnuh.");
+		consultar.setToolTipText("Consultar legos de ChunkKnuh.");
 		consultar.addActionListener(eventosDeLego);
 
 		// Catálogo
 		catálogo = new JMenuItem("Catálogo");
-		catálogo.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/catalogo.png")));
+		catálogo.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/catalogo.png")));
 		catálogo.setMnemonic(KeyEvent.VK_C);
 		catálogo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.ALT_DOWN_MASK));
 		catálogo.addActionListener(eventosDeLego);
@@ -103,12 +95,12 @@ public class VentanaPrincipal extends JFrame {
 
 		// Ayuda
 		ayuda = new JMenu("Ayuda");
-		ayuda.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/ayuda.png")));
+		ayuda.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/ayuda.png")));
 		ayuda.setMnemonic(KeyEvent.VK_Y);
 		ayuda.setToolTipText("Ayuda con ChunkKnuh.");
 
 		acercaDe = new JMenuItem("Acerca de...");
-		acercaDe.setIcon(new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/acercaDe.png")));
+		acercaDe.setIcon(new ImageIcon(getClass().getResource("/chunkknuh/imagenes/acercaDe.png")));
 		acercaDe.setMnemonic(KeyEvent.VK_E);
 		acercaDe.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_DOWN_MASK));
 		acercaDe.setToolTipText("Muestra los créditos de ChunkKnuh.");
@@ -133,7 +125,7 @@ public class VentanaPrincipal extends JFrame {
 		this.getContentPane().setLayout(new FlowLayout());
 		JLabel fondo = new JLabel();
 
-		ImageIcon imagenFondo = new ImageIcon(getClass().getResource("/ChunkKnuh/imagenes/fondo.jpg"));
+		ImageIcon imagenFondo = new ImageIcon(getClass().getResource("/chunkknuh/imagenes/fondo.jpg"));
 		Image imagenEscalada = imagenFondo.getImage().getScaledInstance(
 				Toolkit.getDefaultToolkit().getScreenSize().width - 100,
 				Toolkit.getDefaultToolkit().getScreenSize().height - 100, Image.SCALE_SMOOTH);
@@ -170,10 +162,8 @@ public class VentanaPrincipal extends JFrame {
 				mostrarDialogo();
 			} else if (e.getSource().equals(consultar)) {
 				menúConsultar();
-			} else if (e.getSource().equals(guardar)) {
-				menúGuardar();
-			} else if (e.getSource().equals(abrir)) {
-				menúAbrir();
+			} else if (e.getSource().equals(generarReporte)) {
+				menúGenerarReporte();
 			}
 		}
 	}
@@ -185,34 +175,36 @@ public class VentanaPrincipal extends JFrame {
 
 	// Muestra un cuadro de diálogo "Acerca de", con información del programa.
 	private void menúAcercaDe() {
-		JOptionPane.showMessageDialog(this,
-				"ChunkKnuh" + "\n\n" + "Realizado por:" + "\nMane Isabela Velasco Naranjo" + "\n\n"
-						+ "Derechos reservados UMAR " + '\u00A9' + " 2024",
+		JOptionPane.showMessageDialog(this, "1. Generar reporte PDF\n	Archivo > Generar reporte o Alt+G\n"
+				+ "	- Genera un reporte PDF con los datos:\n"
+				+ "	   código, nombre del lego, tema, precio, piezas y edad mínima.\n"
+				+ "      El reporte incluye todos los legos de la base de datos y se guarda automáticamente en la ruta seleccionada.\n\n"
+				+ "2. Catálogo de Legos\n" + "	Operaciones > Catálogo o Alt+C\n"
+				+ "	- Permite guardar, modificar y eliminar datos de legos en la base de datos.\n\n"
+				+ "3. Consulta de Legos\n" + "	Operaciones > Consultar o Alt+U\n"
+				+ "	- Busca un lego en la base de datos mediante cero o siete criterios." + "\n\n" + "Realizado por:"
+				+ "\nMane Isabela Velasco Naranjo" + "\n\n" + "Derechos reservados UMAR " + '\u00A9' + " 2024",
 				"Acerca de ChunkKnuh", JOptionPane.INFORMATION_MESSAGE,
-				new ImageIcon(getClass().getResource("/legos/imagenes/logo.png")));
+				new ImageIcon(getClass().getResource("/chunkknuh/imagenes/logo.png")));
 	}
 
 	// Cierra la aplicación
 	private void menúSalir() {
-
 		System.exit(0);
-
 	}
 
-	// Muestra un cuadro de diálogo indicando que no hay elementos para consultar.
+	// Consulta datos de la base de datos
 	private void menúConsultar() {
-		JOptionPane.showMessageDialog(this, "No hay elementos para consultar", "Consultar",
-				JOptionPane.WARNING_MESSAGE);
+		try {
+			new ConsultaLegos(this);
+		} catch (BaseDatosErrorException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage(), e.getTitulo(), JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
-	// Muestra un cuadro de diálogo indicando que no hay elementos para guardar.
-	private void menúGuardar() {
-		JOptionPane.showMessageDialog(this, "No hay elementos para guardar", "Guardar", JOptionPane.WARNING_MESSAGE);
-	}
-
-	// Muestra un cuadro de diálogo indicando que no hay elementos para abrir.
-	private void menúAbrir() {
-		JOptionPane.showMessageDialog(this, "No hay elementos para abrir", "Abrir", JOptionPane.WARNING_MESSAGE);
+	// Genera un reporte de todos los legos de la base de datos.
+	private void menúGenerarReporte() {
+		new GenerarReporteLego();
 	}
 
 }

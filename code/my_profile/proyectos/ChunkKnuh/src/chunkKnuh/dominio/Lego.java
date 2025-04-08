@@ -1,16 +1,23 @@
-package chunkKnuh.dominio;
+package chunkknuh.dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-// paradigmas de programación I
-// Reto 3- Catálogo de lego
-// Alumno=Mane Isabela Velasco Naranjo
-// grupo 412
-// 20/06/2024
+import chunkknuh.excepciones.LegoAdvertenciasException;
 
-public class Lego {
+//paradigmas de programación II
+//Alumno=Mane Isabela Velasco Naranjo
+//Reto 2
+
+public class Lego implements Serializable {
+	// Preparar la entidad para permitir la serialización. Serializable
+	private static final long serialVersionUID = 1L;
 	// Variables miembro.
+	// FIXME En la clase de la entidad agregar una variable entera para el
+	// identificador del registro. Setter
+	// y getter por defecto. Inicialización por defecto en el constructor.
+	private int idLego;
 	// 1. Número libre.
 	private int piezas;
 	// 2. Número con rango.
@@ -23,7 +30,7 @@ public class Lego {
 	private String código;
 
 	// 5. Fecha, que será un objeto de tipo Date (java.util).
-	private Date añoPublicación;
+	private Date fechaPublicación;
 
 	// 6. Dato obtenido de opciones mutuamente excluyentes fijas.
 	// Opciones fijas: 1.5+ ,4+ ,6+ ,9+ ,13+ ,18+ .
@@ -43,6 +50,10 @@ public class Lego {
 	private String imagen;
 
 	// Métodos get
+	public int getIdLego() {
+		return idLego;
+	}
+
 	public int getPiezas() {
 		return piezas;
 	}
@@ -59,8 +70,8 @@ public class Lego {
 		return código;
 	}
 
-	public Date getAñoPublicación() {
-		return añoPublicación;
+	public Date getFechaPublicación() {
+		return fechaPublicación;
 	}
 
 	public String getEdadMínima() {
@@ -84,17 +95,16 @@ public class Lego {
 	}
 
 	// Métodos set.
+	public void setIdLego(int idLego) {
+		this.idLego = idLego;
+	}
 
 	public void setPiezas(String piezas) {
 		setPiezas(Integer.parseInt(piezas.trim()));
 	}
 
 	public void setPiezas(int piezas) {
-		if (piezas > 0) {
-			this.piezas = piezas;
-		} else {
-			this.piezas = 0;
-		}
+		this.piezas = piezas;
 	}
 
 	public void setPrecio(String precio) {
@@ -102,40 +112,38 @@ public class Lego {
 	}
 
 	public void setPrecio(float precio) {
-		if (precio > 240.99 && precio < 14213.96) {
-			this.precio = precio;
-		} else {
-			this.precio = 0;
-		}
+		this.precio = precio;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombre(String nombre) throws LegoAdvertenciasException {
 		nombre = nombre.trim();
 		if (nombre.isEmpty()) {
-			throw new IllegalArgumentException();
+			throw new LegoAdvertenciasException(LegoAdvertenciasException.NOMBRE_OBLIGATORIO);
 		} else {
 			this.nombre = nombre;
 		}
 	}
 
-	public void setCódigo(String código) {
+	public void setCódigo(String código) throws LegoAdvertenciasException {
 		código = código.trim();
 		if (código.matches("[0-9]{5}")) {
 			this.código = código;
+		} else if (código.isEmpty()) {
+			throw new LegoAdvertenciasException(LegoAdvertenciasException.CÓDIGO_OBLIGATORIO);
 		} else {
-			throw new IllegalArgumentException();
+			throw new LegoAdvertenciasException(LegoAdvertenciasException.CÓDIGO_FORMATO);
 		}
 	}
 
-	public void setAñoPublicación(Date añoPublicación) {
-		this.añoPublicación = añoPublicación;
+	public void setFechaPublicación(Date fechaPublicación) {
+		this.fechaPublicación = fechaPublicación;
 	}
 
 	public void setEdadMínima(String edadMínima) {
 		this.edadMínima = edadMínima;
 	}
 
-	public void setTema(String tema) {
+	public void setTema(String tema) throws LegoAdvertenciasException {
 		this.tema = tema;
 	}
 
@@ -143,7 +151,10 @@ public class Lego {
 		this.impresiones = impresiones;
 	}
 
-	public void setColores(ArrayList<String> colores) {
+	public void setColores(ArrayList<String> colores) throws LegoAdvertenciasException {
+		if (colores.isEmpty()) {
+			throw new LegoAdvertenciasException(LegoAdvertenciasException.COLORES_OBLIGATORIOS);
+		}
 		this.colores = colores;
 	}
 
@@ -153,6 +164,8 @@ public class Lego {
 
 	// Constructor sin parámetros que establezca todos los valores por defecto.
 	public Lego() {
+		// 0 int
+		this.idLego = 0;
 		// 1.int.
 		this.piezas = 0;
 
@@ -166,7 +179,7 @@ public class Lego {
 		this.código = "";
 
 		// 5.Date.
-		this.añoPublicación = null;
+		this.fechaPublicación = null;
 
 		// 6.String.
 		this.edadMínima = "";
@@ -187,7 +200,8 @@ public class Lego {
 	// La representación en cadena de la entidad.
 	@Override
 	public String toString() {
-		return piezas + "- " + precio + "- " +nombre+"-"+ código+"-"+edadMínima;
+		// return piezas + "- " + precio + "- " +nombre+"-"+ código+"-"+edadMínima;
+		return tema + "- " + nombre + "- " + código;
 	}
 
 }

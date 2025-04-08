@@ -1,12 +1,10 @@
-package chunkKnuh;
+package chunkknuh;
 
-import chunkKnuh.gui.VentanaPrincipal;
+import chunkknuh.gui.VentanaPrincipal;
 
-//paradigmas de programación I
-//Reto 3- Catálogo de lego
+//paradigmas de programación II
 //Alumno=Mane Isabela Velasco Naranjo
-//grupo 412
-//20/06/2024
+//Reto 2
 
 public class ChunkKnuh {
 
